@@ -5,10 +5,28 @@ int main(void) {
     InitWindow(800, 800, "Minesweeper");
     SetTargetFPS(60);
 
+    Color White_b = {242, 234, 212, 255};
+    Color Green_b = {126, 234, 124, 255};
+    Rectangle rec = {100, 100, 30, 30};
+    Box box = {rec, White_b, LIGHTGRAY};
+    Vector2 mouse = {0, 0};
+
     Minesweeper game;
     init_minesweeper(&game);
 
     while (!WindowShouldClose()) {
+
+        mouse = GetMousePosition();
+        for (int x = 0; x < 10; x++){
+            for (int y = 0; y < 10; y++){
+                game.board[y][x].outside = LIGHTGRAY;
+                if (CheckCollisionPointRec(mouse, game.board[y][x].rec)){
+                    game.board[y][x].outside = BLACK;
+                    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) game.board[y][x].inside = Green_b;
+                }
+            }
+        }
+
         BeginDrawing();
             ClearBackground(RAYWHITE);
             draw_board(&game);
