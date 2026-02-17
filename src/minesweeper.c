@@ -22,13 +22,16 @@ void fill_zero(Minesweeper *game, int pos_x, int pos_y)
 }
 
 
-void draw_block(Minesweeper *minesweeper, int pos_x, int pos_y)
+void draw_block(Minesweeper *minesweeper, int x, int y)
 {
-    Box *game = &minesweeper->board[pos_y][pos_x];
+    Box *game = &minesweeper->board[y][x];
     DrawRectangle(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->inside);
     DrawRectangleLines(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->outside);
-    if (game->clicked){
+    if (game->clicked == 1){
         DrawText(TextFormat("%d", game->state), game->rec.x + 11, game->rec.y + 8, 20, BLACK);
+    }
+    if (game->clicked == 2){
+        DrawTexture(minesweeper->flag, game->rec.x, game->rec.y, WHITE);
     }
 }
 
@@ -72,7 +75,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.y = 250;
         template.rec.x += 30;
     }
-    int x, y, mines_left = 20;
+    int x, y, mines_left = 13;
 
     //Placing mines
     while (mines_left > 0){

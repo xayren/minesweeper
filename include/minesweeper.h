@@ -12,6 +12,8 @@ typedef struct {
 
 typedef struct {
     Box board[10][10];
+    Texture2D flag;
+    Texture2D bomb;
 } Minesweeper;
 
 void fill_zero(Minesweeper *game, int pos_x, int pos_y);

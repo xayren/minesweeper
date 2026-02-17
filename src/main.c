@@ -12,6 +12,8 @@ int main(void) {
 
     Minesweeper *game = malloc(sizeof(Minesweeper));
     init_minesweeper(game);
+    game->flag = LoadTexture("resources/flag.png");
+    game->bomb = LoadTexture("resources/bomb.png");
 
     while (!WindowShouldClose()) {
 
@@ -21,11 +23,15 @@ int main(void) {
                 game->board[y][x].outside = LIGHTGRAY;
                 if (CheckCollisionPointRec(mouse, game->board[y][x].rec)){
                     game->board[y][x].outside = BLACK;
-                    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) game->board[y][x].inside = RED;
-                    else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                         if (game->board[y][x].state == 0) fill_zero(game, x, y);
                         game->board[y][x].clicked = 1;
                         game->board[y][x].inside = White_b;
+                    }
+                    else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                        if (game->board[y][x].clicked == 0) game->board[y][x].clicked = 2;
+                        else if (game->board[y][x].clicked == 2) game->board[y][x].clicked = 0;
+                        else if (game->board[y][x].clicked == 1) continue;
                     }
                 }
             }
@@ -36,6 +42,8 @@ int main(void) {
             draw_board(game);
         EndDrawing();
     }
+
+    UnloadTexture(game->flag);
     free(game);
     return 0;
 }
