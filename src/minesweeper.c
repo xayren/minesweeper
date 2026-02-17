@@ -8,6 +8,7 @@ void fill_zero(Minesweeper *game, int pos_x, int pos_y)
 
 {
     game->board[pos_y][pos_x].clicked = 1;
+    game->board[pos_y][pos_x].inside = (Color){220, 220, 220, 255};
     if (game->board[pos_y][pos_x].state != 0) return;
 
     for (int x = -1; x < 2; x++){

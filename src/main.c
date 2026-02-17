@@ -6,7 +6,7 @@ int main(void) {
     InitWindow(800, 800, "Minesweeper");
     SetTargetFPS(60);
 
-    Color White_b = {242, 234, 212, 255};
+    Color White_b = {220, 220, 220, 255};
     Color Green_b = {126, 234, 124, 255};
     Vector2 mouse = {0, 0};
 
@@ -21,10 +21,11 @@ int main(void) {
                 game->board[y][x].outside = LIGHTGRAY;
                 if (CheckCollisionPointRec(mouse, game->board[y][x].rec)){
                     game->board[y][x].outside = BLACK;
-                    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) game->board[y][x].inside = Green_b;
-                    else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) game->board[y][x].inside = RED;
+                    else if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                         if (game->board[y][x].state == 0) fill_zero(game, x, y);
                         game->board[y][x].clicked = 1;
+                        game->board[y][x].inside = White_b;
                     }
                 }
             }
