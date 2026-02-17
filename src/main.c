@@ -23,6 +23,7 @@ int main(void) {
                     game->board[y][x].outside = BLACK;
                     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) game->board[y][x].inside = Green_b;
                     else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                        if (game->board[y][x].state == 0) fill_zero(game, x, y);
                         game->board[y][x].clicked = 1;
                     }
                 }

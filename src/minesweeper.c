@@ -1,4 +1,24 @@
+#include <stdlib.h>
+#include <time.h>
+#include "raylib.h"
 #include "minesweeper.h"
+
+
+void fill_zero(Minesweeper *game, int pos_x, int pos_y)
+
+{
+    game->board[pos_y][pos_x].clicked = 1;
+    if (game->board[pos_y][pos_x].state != 0) return;
+
+    for (int x = -1; x < 2; x++){
+        for (int y = -1; y < 2; y++){
+            if (x == 0 && y == 0) continue;
+            if (pos_x + x >= 0 && pos_x + x < 10 && pos_y + y >= 0 && pos_y + y < 10){
+                if (game->board[pos_y + y][pos_x + x].clicked == 0) fill_zero(game, pos_x + x, pos_y + y);
+            }
+        }
+    }
+}
 
 
 void draw_block(Minesweeper *minesweeper, int pos_x, int pos_y)

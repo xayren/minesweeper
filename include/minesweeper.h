@@ -14,6 +14,8 @@ typedef struct {
     Box board[10][10];
 } Minesweeper;
 
+void fill_zero(Minesweeper *game, int pos_x, int pos_y);
+
 void draw_block(Minesweeper *minesweeper, int pos_x, int pos_y);
 
 void draw_board(Minesweeper *minesweeper);
