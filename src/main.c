@@ -22,6 +22,9 @@ int main(void) {
                 if (CheckCollisionPointRec(mouse, game->board[y][x].rec)){
                     game->board[y][x].outside = BLACK;
                     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) game->board[y][x].inside = Green_b;
+                    else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                        game->board[y][x].clicked = 1;
+                    }
                 }
             }
         }

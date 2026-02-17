@@ -6,6 +6,9 @@ void draw_block(Minesweeper *minesweeper, int pos_x, int pos_y)
     Box *game = &minesweeper->board[pos_y][pos_x];
     DrawRectangle(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->inside);
     DrawRectangleLines(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->outside);
+    if (game->clicked){
+        DrawText(TextFormat("%d", game->state), game->rec.x + 11, game->rec.y + 8, 20, BLACK);
+    }
 }
 
 
@@ -34,16 +37,39 @@ int mines_around(Minesweeper *minesweeper, int pos_x, int pos_y)
 }
 
 
-void init_minesweeper(Minesweeper *minesweeper) {
-    Rectangle rec = {250, 250, 30, 30};
-    Box template = {rec, (Color){242, 234, 212, 255}, LIGHTGRAY , 0};
+void init_minesweeper(Minesweeper *minesweeper)
 
-    for (int x = 0; x < 10; x++) {
-        for (int y = 0; y < 10; y++) {
+{
+    Rectangle rec = {250, 250, 30, 30};
+    Box template = {rec, (Color){242, 234, 212, 255}, LIGHTGRAY , 0, 0};
+
+    for (int x = 0; x < 10; x++){
+        for (int y = 0; y < 10; y++){
             minesweeper->board[y][x] = template;
             template.rec.y += 30;
         }
         template.rec.y = 250;
         template.rec.x += 30;
+    }
+    int x, y, mines_left = 20;
+
+    //Placing mines
+    while (mines_left > 0){
+        x = GetRandomValue(0, 9);
+        y = GetRandomValue(0, 9);
+        if (minesweeper->board[y][x].state == -1) continue;
+        else{
+            minesweeper->board[y][x].state = -1;
+            mines_left--;
+        }
+    }
+
+    //Filling other spaces
+    for (int x = 0; x < 10; x++){
+        for (int y = 0; y < 10; y++){
+            if (minesweeper->board[y][x].state != -1){
+                minesweeper->board[y][x].state = mines_around(minesweeper, x, y);
+            }
+        }
     }
 }
