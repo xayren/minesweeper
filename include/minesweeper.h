@@ -6,6 +6,7 @@ typedef struct {
     Rectangle rec;
     Color inside;
     Color outside;
+    int state;
 } Box;
 
 typedef struct {
@@ -15,6 +16,8 @@ typedef struct {
 void draw_block(Minesweeper *minesweeper, int pos_x, int pos_y);
 
 void draw_board(Minesweeper *minesweeper);
+
+int mines_around(Minesweeper *minesweeper, int pos_x, int pos_y);
 
 void init_minesweeper(Minesweeper *minesweeper);
 
