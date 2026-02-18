@@ -28,9 +28,13 @@ void draw_block(Minesweeper *minesweeper, int x, int y)
     DrawRectangle(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->inside);
     DrawRectangleLines(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->outside);
     if (game->clicked == 1){
+        if (game->state == -1){
+            DrawTexture(minesweeper->bomb, game->rec.x, game->rec.y, WHITE);
+            return;
+        }
         DrawText(TextFormat("%d", game->state), game->rec.x + 11, game->rec.y + 8, 20, BLACK);
     }
-    if (game->clicked == 2){
+    else if (game->clicked == 2){
         DrawTexture(minesweeper->flag, game->rec.x, game->rec.y, WHITE);
     }
 }
