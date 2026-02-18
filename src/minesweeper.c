@@ -4,6 +4,12 @@
 #include "minesweeper.h"
 
 
+void play_again(Minesweeper *game)
+{
+    DrawTexturePro(game->play_again, (Rectangle){0, 0, 512, 512}, (Rectangle){375, 100, 50, 50}, (Vector2){0, 0}, 0, WHITE);
+}
+
+
 void fill_zero(Minesweeper *game, int pos_x, int pos_y)
 
 {
@@ -69,6 +75,7 @@ void init_minesweeper(Minesweeper *minesweeper)
 
 {
     Rectangle rec = {250, 250, 30, 30};
+    minesweeper->play_again_rec = (Rectangle){375, 100, 50, 50};
     Box template = {rec, (Color){242, 234, 212, 255}, LIGHTGRAY , 0, 0};
 
     for (int x = 0; x < 10; x++){

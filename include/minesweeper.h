@@ -14,7 +14,11 @@ typedef struct {
     Box board[10][10];
     Texture2D flag;
     Texture2D bomb;
+    Texture2D play_again;
+    Rectangle play_again_rec;
 } Minesweeper;
+
+void play_again(Minesweeper *game);
 
 void fill_zero(Minesweeper *game, int pos_x, int pos_y);
 

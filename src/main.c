@@ -20,6 +20,7 @@ int main(void) {
     init_minesweeper(game);
     game->flag = LoadTexture("resources/flag.png");
     game->bomb = LoadTexture("resources/bomb.png");
+    game->play_again = LoadTexture("resources/play_again.png");
 
     while (!WindowShouldClose()) {
 
@@ -56,8 +57,25 @@ int main(void) {
             break;
         
         case Explosion:
-        BeginDrawing();
 
+        mouse = GetMousePosition();
+            for (int x = 0; x < 10; x++){
+                for (int y = 0; y < 10; y++){
+                    game->board[y][x].outside = LIGHTGRAY;
+                    if (CheckCollisionPointRec(mouse, game->board[y][x].rec)) game->board[y][x].outside = BLACK;
+                    if (CheckCollisionPointRec(mouse, game->play_again_rec)){
+                        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                            init_minesweeper(game);
+                            game_state = Game;
+                        }
+                    }
+                }
+            }
+
+        BeginDrawing();
+            ClearBackground(RAYWHITE);
+            draw_board(game);
+            play_again(game);
         EndDrawing();
             break;
         }
