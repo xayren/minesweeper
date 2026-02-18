@@ -19,6 +19,8 @@ typedef struct{
     int num_left;
 } Minesweeper;
 
+void turn_up_mines(Minesweeper *game);
+
 void play_again(Minesweeper *game);
 
 void fill_zero(Minesweeper *game, int pos_x, int pos_y);

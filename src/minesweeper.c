@@ -4,6 +4,16 @@
 #include "minesweeper.h"
 
 
+void turn_up_mines(Minesweeper *game)
+{
+    for (int x = 0; x < 10; x++){
+        for (int y = 0; y < 10; y++){
+            if (game->board[y][x].state == -1) game->board[y][x].clicked = 1;
+        }
+    }
+}
+
+
 void play_again(Minesweeper *game)
 {
     DrawTexturePro(game->play_again, (Rectangle){0, 0, 512, 512}, (Rectangle){375, 100, 50, 50}, (Vector2){0, 0}, 0, WHITE);

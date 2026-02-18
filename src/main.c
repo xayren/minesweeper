@@ -38,6 +38,7 @@ int main(void) {
                     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                         if (game->board[y][x].state == 0) fill_zero(game, x, y);
                         else if (game->board[y][x].state == -1){
+                            turn_up_mines(game);
                             game_state = Explosion;
                         }
                         else if(game->board[y][x].clicked == 0 || game->board[y][x].clicked == 2) game->num_left--;
