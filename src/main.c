@@ -5,7 +5,7 @@
 typedef enum {
     Game,
     Explosion,
-    Wictory
+    Victory
 } Game_State;
 
 int main(void) {
@@ -21,6 +21,7 @@ int main(void) {
     init_minesweeper(game);
     game->flag = LoadTexture("resources/flag.png");
     game->bomb = LoadTexture("resources/bomb.png");
+    game->trophy = LoadTexture("resources/trophy.png");
     game->play_again = LoadTexture("resources/play_again.png");
 
     while (!WindowShouldClose()) {
@@ -53,14 +54,41 @@ int main(void) {
                 }
             }
         }
-        if (game->num_left <= 0) game_state = Explosion;
-
+        if (game->num_left <= 0){
+            turn_up_mines(game);
+            game_state = Victory;
+        }
         BeginDrawing();
             ClearBackground(RAYWHITE);
             draw_board(game);
         EndDrawing();
             break;
         
+        case Victory:
+
+        mouse = GetMousePosition();
+            for (int x = 0; x < 10; x++){
+                for (int y = 0; y < 10; y++){
+                    game->board[y][x].outside = LIGHTGRAY;
+                    if (CheckCollisionPointRec(mouse, game->board[y][x].rec)) game->board[y][x].outside = BLACK;
+                    if (CheckCollisionPointRec(mouse, game->play_again_rec)){
+                        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                            init_minesweeper(game);
+                            game_state = Game;
+                        }
+                    }
+                }
+            }
+
+        BeginDrawing();
+            ClearBackground(RAYWHITE);
+            draw_board(game);
+            DrawTexture(game->trophy, 372, 40, WHITE);
+            play_again(game);
+        EndDrawing();
+            break;
+
+
         case Explosion:
 
         mouse = GetMousePosition();
@@ -87,6 +115,9 @@ int main(void) {
     }
 
     UnloadTexture(game->flag);
+    UnloadTexture(game->bomb);
+    UnloadTexture(game->play_again);
+    UnloadTexture(game->trophy);
     free(game);
     return 0;
 }

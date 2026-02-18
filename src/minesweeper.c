@@ -8,7 +8,12 @@ void turn_up_mines(Minesweeper *game)
 {
     for (int x = 0; x < 10; x++){
         for (int y = 0; y < 10; y++){
-            if (game->board[y][x].state == -1) game->board[y][x].clicked = 1;
+            if (game->board[y][x].state == -1){
+                if (game->num_left == 0) game->board[y][x].clicked = 2;
+                else (game->board[y][x].clicked = 1);
+            }
+            if (game->board[y][x].clicked == 2 && game->board[y][x].state == -1) game->board[y][x].inside = LIME;
+            else if (game->board[y][x].clicked == 2 && game->board[y][x].state != -1) game->board[y][x].inside = (Color){255, 150, 0, 255};
         }
     }
 }
@@ -97,7 +102,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.y = 250;
         template.rec.x += 30;
     }
-    int x, y, mines_left = 13;
+    int x, y, mines_left = 5;
     minesweeper->num_left = 100 - mines_left;
     //Placing mines
     while (mines_left > 0){
