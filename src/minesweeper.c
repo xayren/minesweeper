@@ -13,6 +13,7 @@ void play_again(Minesweeper *game)
 void fill_zero(Minesweeper *game, int pos_x, int pos_y)
 
 {
+    game->num_left--;
     game->board[pos_y][pos_x].clicked = 1;
     game->board[pos_y][pos_x].inside = (Color){220, 220, 220, 255};
     if (game->board[pos_y][pos_x].state != 0) return;
@@ -87,7 +88,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.x += 30;
     }
     int x, y, mines_left = 13;
-
+    minesweeper->num_left = 100 - mines_left;
     //Placing mines
     while (mines_left > 0){
         x = GetRandomValue(0, 9);

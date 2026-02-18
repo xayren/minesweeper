@@ -10,12 +10,13 @@ typedef struct {
     int clicked;
 } Box;
 
-typedef struct {
+typedef struct{
     Box board[10][10];
     Texture2D flag;
     Texture2D bomb;
     Texture2D play_again;
     Rectangle play_again_rec;
+    int num_left;
 } Minesweeper;
 
 void play_again(Minesweeper *game);

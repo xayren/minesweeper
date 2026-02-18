@@ -4,7 +4,8 @@
 
 typedef enum {
     Game,
-    Explosion
+    Explosion,
+    Wictory
 } Game_State;
 
 int main(void) {
@@ -27,6 +28,7 @@ int main(void) {
         switch (game_state)
         {
         case Game:
+
         mouse = GetMousePosition();
         for (int x = 0; x < 10; x++){
             for (int y = 0; y < 10; y++){
@@ -38,6 +40,7 @@ int main(void) {
                         else if (game->board[y][x].state == -1){
                             game_state = Explosion;
                         }
+                        else if(game->board[y][x].clicked == 0 || game->board[y][x].clicked == 2) game->num_left--;
                         game->board[y][x].clicked = 1;
                         game->board[y][x].inside = White_b;
                     }
@@ -49,6 +52,7 @@ int main(void) {
                 }
             }
         }
+        if (game->num_left <= 0) game_state = Explosion;
 
         BeginDrawing();
             ClearBackground(RAYWHITE);
