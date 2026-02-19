@@ -18,6 +18,7 @@ typedef struct{
     Rectangle play_again_rec;
     int num_left;
     Texture2D trophy;
+    int first_click;
 } Minesweeper;
 
 void turn_up_mines(Minesweeper *game);

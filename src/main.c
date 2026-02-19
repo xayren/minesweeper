@@ -37,12 +37,21 @@ int main(void) {
                 if (CheckCollisionPointRec(mouse, game->board[y][x].rec)){
                     game->board[y][x].outside = BLACK;
                     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                        if (game->board[y][x].state == 0) fill_zero(game, x, y);
-                        else if (game->board[y][x].state == -1){
+                        if (game->board[y][x].state == -1){
+                            if (game->first_click == 1){
+                                while(game->board[y][x].state == -1){
+                                    init_minesweeper(game);
+                                    game->board[y][x].clicked = 1;
+                                }
+                            }
+                            else {
                             turn_up_mines(game);
                             game_state = Explosion;
+                            }
                         }
-                        else if(game->board[y][x].clicked == 0 || game->board[y][x].clicked == 2) game->num_left--;
+                        game->first_click = 0;
+                        if (game->board[y][x].state == 0) fill_zero(game, x, y);
+                        if (game->board[y][x].clicked == 0 || game->board[y][x].clicked == 2) game->num_left--;
                         game->board[y][x].clicked = 1;
                         game->board[y][x].inside = White_b;
                     }

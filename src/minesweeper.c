@@ -93,6 +93,7 @@ void init_minesweeper(Minesweeper *minesweeper)
     Rectangle rec = {250, 250, 30, 30};
     minesweeper->play_again_rec = (Rectangle){375, 100, 50, 50};
     Box template = {rec, (Color){242, 234, 212, 255}, LIGHTGRAY , 0, 0};
+    minesweeper->first_click = 1;
 
     for (int x = 0; x < 10; x++){
         for (int y = 0; y < 10; y++){
@@ -102,7 +103,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.y = 250;
         template.rec.x += 30;
     }
-    int x, y, mines_left = 5;
+    int x, y, mines_left = 15;
     minesweeper->num_left = 100 - mines_left;
     //Placing mines
     while (mines_left > 0){
