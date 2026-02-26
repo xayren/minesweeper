@@ -9,11 +9,17 @@ void turn_up_mines(Minesweeper *game)
     for (int x = 0; x < 10; x++){
         for (int y = 0; y < 10; y++){
             if (game->board[y][x].state == -1){
-                if (game->num_left == 0) game->board[y][x].clicked = 2;
-                else (game->board[y][x].clicked = 1);
+                if (game->board[y][x].clicked == 1) game->board[y][x].inside = (Color){255, 147, 0, 255};
+                else
+                {
+                    game->board[y][x].clicked = 1;
+                }
+                if (game->num_left == 0)
+                {
+                    game->board[y][x].clicked = 2;
+                    game->board[y][x].inside = LIME;
+                }
             }
-            if (game->board[y][x].clicked == 2 && game->board[y][x].state == -1) game->board[y][x].inside = LIME;
-            else if (game->board[y][x].clicked == 2 && game->board[y][x].state != -1) game->board[y][x].inside = (Color){255, 150, 0, 255};
         }
     }
 }
@@ -28,9 +34,10 @@ void play_again(Minesweeper *game)
 void fill_zero(Minesweeper *game, int pos_x, int pos_y)
 
 {
+    if (game->board[pos_y][pos_x].clicked == 1 || game->board[pos_y][pos_x].state == -1) return;
     game->num_left--;
     game->board[pos_y][pos_x].clicked = 1;
-    game->board[pos_y][pos_x].inside = (Color){220, 220, 220, 255};
+    game->board[pos_y][pos_x].inside = (Color){190, 190, 190, 255};
     if (game->board[pos_y][pos_x].state != 0) return;
 
     for (int x = -1; x < 2; x++){
@@ -47,18 +54,14 @@ void fill_zero(Minesweeper *game, int pos_x, int pos_y)
 void draw_block(Minesweeper *minesweeper, int x, int y)
 {
     Box *game = &minesweeper->board[y][x];
-    DrawRectangle(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->inside);
+    DrawRectangle(game->rec.x, game->rec.y, game->rec.width, game->rec.height, minesweeper->board[y][x].inside);
     DrawRectangleLines(game->rec.x, game->rec.y, game->rec.width, game->rec.height, game->outside);
     if (game->clicked == 1){
-        if (game->state == -1){
-            DrawTexture(minesweeper->bomb, game->rec.x, game->rec.y, WHITE);
-            return;
-        }
-        DrawText(TextFormat("%d", game->state), game->rec.x + 11, game->rec.y + 8, 20, BLACK);
+        if (game->state == -1) DrawTexture(minesweeper->bomb, game->rec.x, game->rec.y, WHITE);
+
+        else if (game->state != 0) DrawText(TextFormat("%d", game->state), game->rec.x + 11, game->rec.y + 8, 20, BLACK);
     }
-    else if (game->clicked == 2){
-        DrawTexture(minesweeper->flag, game->rec.x, game->rec.y, WHITE);
-    }
+    else if (game->clicked == 2) DrawTexture(minesweeper->flag, game->rec.x, game->rec.y, WHITE);
 }
 
 
@@ -103,7 +106,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.y = 250;
         template.rec.x += 30;
     }
-    int x, y, mines_left = 15;
+    int x, y, mines_left = 10;
     minesweeper->num_left = 100 - mines_left;
     //Placing mines
     while (mines_left > 0){
