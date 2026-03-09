@@ -51,7 +51,7 @@ int main(void) {
                             else
                             {
                                 game->board[y][x].clicked = LMB;
-                                turn_up_mines(game);
+                                init_end(game);
                                 game_state = Explosion;
                             }
                         }
@@ -84,7 +84,7 @@ int main(void) {
             }
         }
         if (game->num_left <= 0){
-            turn_up_mines(game);
+            init_end(game);
             game_state = Victory;
         }
         BeginDrawing();

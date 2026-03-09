@@ -4,7 +4,7 @@
 #include "minesweeper.h"
 
 
-void turn_up_mines(Minesweeper *game)
+void init_end(Minesweeper *game)
 {
     for (int x = 0; x < 10; x++)
     {
@@ -52,24 +52,24 @@ void play_again(Minesweeper *game)
 }
 
 
-void fill_zero(Minesweeper *game, int pos_x, int pos_y)
+void fill_zero(Minesweeper *game, int x, int y)
 
 {
-    if (game->board[pos_y][pos_x].clicked == LMB || game->board[pos_y][pos_x].state == -1) return;
+    if (game->board[y][x].clicked == LMB || game->board[y][x].state == -1) return;
     game->num_left--;
-    game->board[pos_y][pos_x].clicked = LMB;
-    game->board[pos_y][pos_x].inside = (Color){190, 190, 190, 255};
-    if (game->board[pos_y][pos_x].state != 0)
+    game->board[y][x].clicked = LMB;
+    game->board[y][x].inside = (Color){190, 190, 190, 255};
+    if (game->board[y][x].state != 0)
     {
-        game->board[pos_y][pos_x].draw = NUMBER;
+        game->board[y][x].draw = NUMBER;
         return;
     }
 
-    for (int x = -1; x < 2; x++){
-        for (int y = -1; y < 2; y++){
-            if (x == 0 && y == 0) continue;
-            if (pos_x + x >= 0 && pos_x + x < 10 && pos_y + y >= 0 && pos_y + y < 10){
-                if (game->board[pos_y + y][pos_x + x].clicked == NOT_CLICKED) fill_zero(game, pos_x + x, pos_y + y);
+    for (int x_i = -1; x_i < 2; x_i++){
+        for (int y_i = -1; y_i < 2; y_i++){
+            if (x_i == 0 && y_i == 0) continue;
+            if (x + x_i >= 0 && x + x_i < 10 && y + y_i >= 0 && y + y_i < 10){
+                if (game->board[y + y_i][x + x_i].clicked == NOT_CLICKED) fill_zero(game, x + x_i, y + y_i);
             }
         }
     }
@@ -100,15 +100,15 @@ void draw_board(Minesweeper *minesweeper)
 }
 
 
-int mines_around(Minesweeper *minesweeper, int pos_x, int pos_y)
+int mines_around(Minesweeper *minesweeper, int x, int y)
 {
     int result = 0;
-    for (int y = -1; y < 2; y++){
-        for (int x = -1; x < 2; x++){
-            if (y == 0 && x == 0) continue;
-            if (pos_x + x < 0 || pos_x + x >= 10) continue;
-            if (pos_y + y < 0 || pos_y + y >= 10) continue;
-            if (minesweeper->board[pos_y + y][pos_x + x].state == -1) result++;
+    for (int y_i = -1; y_i < 2; y_i++){
+        for (int x_i = -1; x_i < 2; x_i++){
+            if (y_i == 0 && x_i == 0) continue;
+            if (x + x_i < 0 || x + x_i >= 10) continue;
+            if (y + y_i < 0 || y + y_i >= 10) continue;
+            if (minesweeper->board[y + y_i][x + x_i].state == -1) result++;
         }
     }
     return result;
