@@ -8,6 +8,7 @@ typedef struct {
     Color outside;
     int state;
     int clicked;
+    int draw;
 } Box;
 
 typedef struct{

@@ -49,6 +49,7 @@ int main(void) {
                                 {
                                     init_minesweeper(game);
                                     game->board[y][x].clicked = 1;
+                                    game->board[y][x].draw = 1;
                                     game->num_left--;
                                 }
                             }
@@ -59,17 +60,30 @@ int main(void) {
                                 game_state = Explosion;
                             }
                         }
-                        else game->board[y][x].inside = White_b;
+                        else
+                        {
+                            game->board[y][x].draw = 1;
+                            game->board[y][x].inside = White_b;
+                        }
                         game->first_click = 0;
                         
                         if (game->board[y][x].state == 0) fill_zero(game, x, y);
                         if (game->board[y][x].clicked == 0 || game->board[y][x].clicked == 2) game->num_left--;
                         game->board[y][x].clicked = 1;
                     }
+
                     else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
                         if (game->board[y][x].clicked == 1) continue;
-                        if (game->board[y][x].clicked == 0) game->board[y][x].clicked = 2;
-                        else if (game->board[y][x].clicked == 2) game->board[y][x].clicked = 0;
+                        if (game->board[y][x].clicked == 0)
+                        {
+                            game->board[y][x].draw = 2;
+                            game->board[y][x].clicked = 2;
+                        }
+                        else if (game->board[y][x].clicked == 2)
+                        {
+                            game->board[y][x].draw = 0;
+                            game->board[y][x].clicked = 0;
+                        }
                     }
                 }
             }
