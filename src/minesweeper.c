@@ -59,6 +59,7 @@ void fill_zero(Minesweeper *game, int x, int y)
     game->num_left--;
     game->board[y][x].clicked = LMB;
     game->board[y][x].inside = (Color){190, 190, 190, 255};
+    game->board[y][x].draw = EMPTY;
     if (game->board[y][x].state != 0)
     {
         game->board[y][x].draw = NUMBER;
@@ -69,7 +70,7 @@ void fill_zero(Minesweeper *game, int x, int y)
         for (int y_i = -1; y_i < 2; y_i++){
             if (x_i == 0 && y_i == 0) continue;
             if (x + x_i >= 0 && x + x_i < 10 && y + y_i >= 0 && y + y_i < 10){
-                if (game->board[y + y_i][x + x_i].clicked == NOT_CLICKED) fill_zero(game, x + x_i, y + y_i);
+                if (game->board[y + y_i][x + x_i].clicked != LMB) fill_zero(game, x + x_i, y + y_i);
             }
         }
     }
