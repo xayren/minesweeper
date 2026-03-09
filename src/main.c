@@ -25,64 +25,8 @@ int main(void) {
         {
         case Game:
 
-        mouse = GetMousePosition();
-        for (int x = 0; x < 10; x++)
-        {
-            for (int y = 0; y < 10; y++)
-            {
-                game->board[y][x].outside = LIGHTGRAY;
-                if (CheckCollisionPointRec(mouse, game->board[y][x].rec))
-                {
-                    game->board[y][x].outside = BLACK;
-                    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-                    {
-                        if (game->board[y][x].state == -1)
-                        {
-                            if (game->first_click == 1)
-                            {
-                                while(game->board[y][x].state == -1)
-                                {
-                                    init_minesweeper(game);
-                                    game->board[y][x].clicked = LMB;
-                                    game->board[y][x].draw = NUMBER;
-                                    game->num_left--;
-                                }
-                            }
-                            else
-                            {
-                                game->board[y][x].clicked = LMB;
-                                init_end(game);
-                                game_state = Explosion;
-                            }
-                        }
-                        else
-                        {
-                            game->board[y][x].draw = NUMBER;
-                            game->board[y][x].inside = White_b;
-                        }
-                        game->first_click = 0;
-                        
-                        if (game->board[y][x].state == 0) fill_zero(game, x, y);
-                        if (game->board[y][x].clicked == NOT_CLICKED || game->board[y][x].clicked == RMB) game->num_left--;
-                        game->board[y][x].clicked = LMB;
-                    }
+        handle_mouse_input(game, &game_state);
 
-                    else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
-                        if (game->board[y][x].clicked == LMB) continue;
-                        if (game->board[y][x].clicked == NOT_CLICKED)
-                        {
-                            game->board[y][x].draw = FLAG;
-                            game->board[y][x].clicked = RMB;
-                        }
-                        else if (game->board[y][x].clicked == RMB)
-                        {
-                            game->board[y][x].draw = EMPTY;
-                            game->board[y][x].clicked = RMB;
-                        }
-                    }
-                }
-            }
-        }
         if (game->num_left <= 0){
             init_end(game);
             game_state = Victory;
