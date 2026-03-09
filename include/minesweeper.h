@@ -2,13 +2,30 @@
 #define MINESWEEPER_H
 #include "raylib.h"
 
-typedef enum {
+typedef enum
+{
+    EMPTY,
+    NUMBER,
+    FLAG,
+    MINE
+} draw;
+
+typedef enum
+{
+    NOT_CLICKED,
+    LMB,
+    RMB
+} clicked;
+
+typedef enum
+{
     Game,
     Explosion,
     Victory
 } Game_State;
 
-typedef struct {
+typedef struct
+{
     Rectangle rec;
     Color inside;
     Color outside;
@@ -17,7 +34,8 @@ typedef struct {
     int draw;
 } Box;
 
-typedef struct{
+typedef struct
+{
     Box board[10][10];
     Texture2D flag;
     Texture2D bomb;

@@ -43,41 +43,41 @@ int main(void) {
                                 while(game->board[y][x].state == -1)
                                 {
                                     init_minesweeper(game);
-                                    game->board[y][x].clicked = 1;
-                                    game->board[y][x].draw = 1;
+                                    game->board[y][x].clicked = LMB;
+                                    game->board[y][x].draw = NUMBER;
                                     game->num_left--;
                                 }
                             }
                             else
                             {
-                                game->board[y][x].clicked = 1;
+                                game->board[y][x].clicked = LMB;
                                 turn_up_mines(game);
                                 game_state = Explosion;
                             }
                         }
                         else
                         {
-                            game->board[y][x].draw = 1;
+                            game->board[y][x].draw = NUMBER;
                             game->board[y][x].inside = White_b;
                         }
                         game->first_click = 0;
                         
                         if (game->board[y][x].state == 0) fill_zero(game, x, y);
-                        if (game->board[y][x].clicked == 0 || game->board[y][x].clicked == 2) game->num_left--;
-                        game->board[y][x].clicked = 1;
+                        if (game->board[y][x].clicked == NOT_CLICKED || game->board[y][x].clicked == RMB) game->num_left--;
+                        game->board[y][x].clicked = LMB;
                     }
 
                     else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
-                        if (game->board[y][x].clicked == 1) continue;
-                        if (game->board[y][x].clicked == 0)
+                        if (game->board[y][x].clicked == LMB) continue;
+                        if (game->board[y][x].clicked == NOT_CLICKED)
                         {
-                            game->board[y][x].draw = 2;
-                            game->board[y][x].clicked = 2;
+                            game->board[y][x].draw = FLAG;
+                            game->board[y][x].clicked = RMB;
                         }
-                        else if (game->board[y][x].clicked == 2)
+                        else if (game->board[y][x].clicked == RMB)
                         {
-                            game->board[y][x].draw = 0;
-                            game->board[y][x].clicked = 0;
+                            game->board[y][x].draw = EMPTY;
+                            game->board[y][x].clicked = RMB;
                         }
                     }
                 }
