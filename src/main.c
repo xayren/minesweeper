@@ -2,11 +2,6 @@
 #include "raylib.h"
 #include "minesweeper.h"
 
-typedef enum {
-    Game,
-    Explosion,
-    Victory
-} Game_State;
 
 int main(void) {
     InitWindow(800, 800, "Minesweeper");

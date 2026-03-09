@@ -2,6 +2,12 @@
 #define MINESWEEPER_H
 #include "raylib.h"
 
+typedef enum {
+    Game,
+    Explosion,
+    Victory
+} Game_State;
+
 typedef struct {
     Rectangle rec;
     Color inside;

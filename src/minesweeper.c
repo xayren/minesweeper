@@ -19,7 +19,7 @@ void turn_up_mines(Minesweeper *game)
                     else if (tmp->clicked == 1)
                     {
                         tmp->draw = 3;
-                        tmp->inside = (Color){255, 147, 0, 255}; // VIOLET
+                        tmp->inside = (Color){255, 147, 0, 255};
                     }
                     else if (tmp->clicked == 2)
                     {
@@ -29,7 +29,7 @@ void turn_up_mines(Minesweeper *game)
                 }
                 else                    // not mine
                 {
-                    if (tmp->clicked == 2) tmp->inside = (Color){255, 147, 0, 255}; // BLUE
+                    if (tmp->clicked == 2) tmp->inside = (Color){255, 147, 0, 255};
                 }
             }
 
@@ -41,23 +41,6 @@ void turn_up_mines(Minesweeper *game)
                     tmp->inside = LIME;
                 }
             }
-
-
-            /*
-            if (game->board[y][x].state == -1)
-            {
-                if (game->board[y][x].clicked == 1) game->board[y][x].inside = (Color){255, 147, 0, 255};
-                else
-                {
-                    game->board[y][x].clicked = 1;
-                }
-                if (game->num_left == 0)
-                {
-                    game->board[y][x].clicked = 2;
-                    game->board[y][x].inside = LIME;
-                }
-            }
-            */
         }
     }
 }
@@ -104,17 +87,6 @@ void draw_block(Minesweeper *game, int x, int y)
     else if (tmp->draw == 2) DrawTexture(game->flag, tmp->rec.x, tmp->rec.y, WHITE);
 
     else if (tmp->draw == 3) DrawTexture(game->bomb, tmp->rec.x, tmp->rec.y, WHITE);
-
-    /*
-    if (tmp->clicked == 1)
-    {
-        if (tmp->state == -1) DrawTexture(game->bomb, tmp->rec.x, tmp->rec.y, WHITE);
-
-        else if (tmp->state != 0) DrawText(TextFormat("%d", tmp->state), tmp->rec.x + 11, tmp->rec.y + 8, 20, BLACK);
-    }
-    
-    else if (tmp->clicked == 2) DrawTexture(game->flag, tmp->rec.x, tmp->rec.y, WHITE);
-    */
 }
 
 
