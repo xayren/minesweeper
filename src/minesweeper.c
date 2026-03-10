@@ -104,7 +104,8 @@ void handle_mouse_input(Minesweeper *game, Game_State *game_state)
                     game->board[y][x].clicked = LMB;
                 }
 
-                else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+                {
                     if (game->board[y][x].clicked == LMB) continue;
                     if (game->board[y][x].clicked == NOT_CLICKED)
                     {
@@ -114,7 +115,7 @@ void handle_mouse_input(Minesweeper *game, Game_State *game_state)
                     else if (game->board[y][x].clicked == RMB)
                     {
                         game->board[y][x].draw = EMPTY;
-                        game->board[y][x].clicked = RMB;
+                        game->board[y][x].clicked = NOT_CLICKED;
                     }
                 }
             }
