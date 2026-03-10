@@ -64,8 +64,9 @@ void mouse_liner(Minesweeper *game)
 }
 
 
-void handle_RMB(Minesweeper *game, Game_State *game_state, int x, int y)
+void handle_LMB(Minesweeper *game, Game_State *game_state, int x, int y)
 {
+    if (game->board[y][x].clicked == RMB) return;
     if (game->board[y][x].state == -1)
     {
         if (game->first_click == 1)
@@ -96,7 +97,7 @@ void handle_RMB(Minesweeper *game, Game_State *game_state, int x, int y)
 }
 
 
-void handle_LMB(Minesweeper *game, Game_State *game_State, int x, int y)
+void handle_RMB(Minesweeper *game, Game_State *game_State, int x, int y)
 {
     if (game->board[y][x].clicked == LMB) return;
     if (game->board[y][x].clicked == NOT_CLICKED)
@@ -121,8 +122,8 @@ void handle_mouse_input(Minesweeper *game, Game_State *game_state)
         {
             if (CheckCollisionPointRec(mouse, game->board[y][x].rec))
             {
-                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) handle_RMB(game, game_state, x, y);
-                if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) handle_LMB(game, game_state, x, y);
+                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) handle_LMB(game, game_state, x, y);
+                if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) handle_RMB(game, game_state, x, y);
             }
         }
     }
