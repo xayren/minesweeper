@@ -52,5 +52,6 @@ int main(void) {
             break;
         }
     }
+    free_game(game);
     return 0;
 }
