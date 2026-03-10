@@ -9,11 +9,8 @@ int main(void) {
 
     Game_State game_state = Game;
     Minesweeper *game = malloc(sizeof(Minesweeper));
-    init_minesweeper(game);
-    game->flag = LoadTexture("resources/flag.png");
-    game->bomb = LoadTexture("resources/bomb.png");
-    game->trophy = LoadTexture("resources/trophy.png");
-    game->play_again = LoadTexture("resources/play_again.png");
+    
+    init_game(game);
 
     while (!WindowShouldClose()) {
 

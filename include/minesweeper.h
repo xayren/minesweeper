@@ -46,6 +46,8 @@ typedef struct
     int first_click;
 } Minesweeper;
 
+void init_game(Minesweeper *minesweeper);
+
 void play_again(Minesweeper *game, Game_State *game_state);
 
 void mouse_liner(Minesweeper *game);

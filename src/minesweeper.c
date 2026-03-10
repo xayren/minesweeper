@@ -4,6 +4,16 @@
 #include "minesweeper.h"
 
 
+void init_game(Minesweeper *minesweeper)
+{
+    init_minesweeper(minesweeper);
+    minesweeper->flag = LoadTexture("resources/flag.png");
+    minesweeper->bomb = LoadTexture("resources/bomb.png");
+    minesweeper->trophy = LoadTexture("resources/trophy.png");
+    minesweeper->play_again = LoadTexture("resources/play_again.png");
+}
+
+
 void play_again(Minesweeper *game, Game_State *game_state)
 {
     Vector2 mouse = GetMousePosition();
