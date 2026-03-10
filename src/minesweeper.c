@@ -4,6 +4,43 @@
 #include "minesweeper.h"
 
 
+void play_again(Minesweeper *game, Game_State *game_state)
+{
+    Vector2 mouse = GetMousePosition();
+    for (int x = 0; x < 10; x++)
+    {
+        for (int y = 0; y < 10; y++)
+        {
+            if (CheckCollisionPointRec(mouse, game->play_again_rec))
+            {
+                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+                {
+                    init_minesweeper(game);
+                    *game_state = Game;
+                }
+            }
+        }
+    }
+}
+
+
+void mouse_liner(Minesweeper *game)
+{
+    Vector2 mouse = GetMousePosition();
+    for (int x = 0; x < 10; x++)
+    {
+        for (int y = 0; y < 10; y++)
+        {
+            game->board[y][x].outside = LIGHTGRAY;
+            if (CheckCollisionPointRec(mouse, game->board[y][x].rec))
+            {
+                game->board[y][x].outside = BLACK;
+            }
+        }
+    }
+}
+
+
 void handle_mouse_input(Minesweeper *game, Game_State *game_state)
 {
     Vector2 mouse = GetMousePosition();
@@ -110,7 +147,7 @@ void init_end(Minesweeper *game)
 }
 
 
-void play_again(Minesweeper *game)
+void play_again_draw(Minesweeper *game)
 {
     DrawTexturePro(game->play_again, (Rectangle){0, 0, 512, 512}, (Rectangle){375, 100, 50, 50}, (Vector2){0, 0}, 0, WHITE);
 }
@@ -157,6 +194,7 @@ void draw_block(Minesweeper *game, int x, int y)
 
 void draw_board(Minesweeper *minesweeper)
 {
+    ClearBackground(RAYWHITE);
     for (int y = 0; y < 10; y++){
         for (int x = 0; x < 10; x++){
             draw_block(minesweeper, x, y);
@@ -196,7 +234,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.y = 250;
         template.rec.x += 30;
     }
-    int x, y, mines_left = 10;
+    int x, y, mines_left = 5;
     minesweeper->num_left = 100 - mines_left;
     //Placing mines
     while (mines_left > 0){
