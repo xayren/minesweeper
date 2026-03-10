@@ -19,17 +19,14 @@ int main(void) {
 
             mouse_liner(game);
             handle_mouse_input(game, &game_state);
-
-            if (game->num_left <= 0){
-                init_end(game);
-                game_state = Victory;
-            }
+            is_victory(game, &game_state);
 
         BeginDrawing();
             draw_board(game);
         EndDrawing();
             break;
         
+
         case Victory:
 
             mouse_liner(game);

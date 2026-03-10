@@ -46,6 +46,8 @@ typedef struct
     int first_click;
 } Minesweeper;
 
+void is_victory(Minesweeper *game, Game_State *game_state);
+
 void free_game(Minesweeper *game);
 
 void init_game(Minesweeper *minesweeper);

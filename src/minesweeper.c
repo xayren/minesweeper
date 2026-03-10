@@ -4,6 +4,15 @@
 #include "minesweeper.h"
 
 
+void is_victory(Minesweeper *game, Game_State *game_state)
+{
+    if (game->num_left <= 0){
+                init_end(game);
+                *game_state = Victory;
+            }
+}
+
+
 void free_game(Minesweeper *game)
 {
     UnloadTexture(game->flag);
@@ -27,18 +36,12 @@ void init_game(Minesweeper *minesweeper)
 void play_again(Minesweeper *game, Game_State *game_state)
 {
     Vector2 mouse = GetMousePosition();
-    for (int x = 0; x < 10; x++)
+    if (CheckCollisionPointRec(mouse, game->play_again_rec))
     {
-        for (int y = 0; y < 10; y++)
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            if (CheckCollisionPointRec(mouse, game->play_again_rec))
-            {
-                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-                {
-                    init_minesweeper(game);
-                    *game_state = Game;
-                }
-            }
+            init_minesweeper(game);
+            *game_state = Game;
         }
     }
 }
@@ -68,10 +71,8 @@ void handle_mouse_input(Minesweeper *game, Game_State *game_state)
     {
         for (int y = 0; y < 10; y++)
         {
-            game->board[y][x].outside = LIGHTGRAY;
             if (CheckCollisionPointRec(mouse, game->board[y][x].rec))
             {
-                game->board[y][x].outside = BLACK;
                 if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
                 {
                     if (game->board[y][x].state == -1)
@@ -81,10 +82,7 @@ void handle_mouse_input(Minesweeper *game, Game_State *game_state)
                             while(game->board[y][x].state == -1)
                             {
                                 init_minesweeper(game);
-                                game->board[y][x].clicked = LMB;
-                                game->board[y][x].draw = NUMBER;
-                                game->board[y][x].inside = (Color){190, 190, 190, 255};
-                                game->num_left--;
+                                fill_zero(game, x, y);
                             }
                         }
                         else
@@ -180,10 +178,9 @@ void fill_zero(Minesweeper *game, int x, int y)
     game->num_left--;
     game->board[y][x].clicked = LMB;
     game->board[y][x].inside = (Color){190, 190, 190, 255};
-    game->board[y][x].draw = EMPTY;
+    game->board[y][x].draw = NUMBER;
     if (game->board[y][x].state != 0)
     {
-        game->board[y][x].draw = NUMBER;
         return;
     }
 
