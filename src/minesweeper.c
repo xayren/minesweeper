@@ -64,6 +64,54 @@ void mouse_liner(Minesweeper *game)
 }
 
 
+void handle_RMB(Minesweeper *game, Game_State *game_state, int x, int y)
+{
+    if (game->board[y][x].state == -1)
+    {
+        if (game->first_click == 1)
+        {
+            while(game->board[y][x].state == -1)
+            {
+                init_minesweeper(game);
+                fill_zero(game, x, y);
+            }
+        }
+        else
+        {
+            game->board[y][x].clicked = LMB;
+            init_end(game);
+            *game_state = Explosion;
+        }
+    }
+    else
+    {
+        game->board[y][x].draw = NUMBER;
+        game->board[y][x].inside = (Color){190, 190, 190, 255};
+    }
+    game->first_click = 0;
+    
+    if (game->board[y][x].state == 0) fill_zero(game, x, y);
+    if (game->board[y][x].clicked == NOT_CLICKED || game->board[y][x].clicked == RMB) game->num_left--;
+    game->board[y][x].clicked = LMB;
+}
+
+
+void handle_LMB(Minesweeper *game, Game_State *game_State, int x, int y)
+{
+    if (game->board[y][x].clicked == LMB) return;
+    if (game->board[y][x].clicked == NOT_CLICKED)
+    {
+        game->board[y][x].draw = FLAG;
+        game->board[y][x].clicked = RMB;
+    }
+    else if (game->board[y][x].clicked == RMB)
+    {
+        game->board[y][x].draw = EMPTY;
+        game->board[y][x].clicked = NOT_CLICKED;
+    }
+}
+
+
 void handle_mouse_input(Minesweeper *game, Game_State *game_state)
 {
     Vector2 mouse = GetMousePosition();
@@ -73,51 +121,8 @@ void handle_mouse_input(Minesweeper *game, Game_State *game_state)
         {
             if (CheckCollisionPointRec(mouse, game->board[y][x].rec))
             {
-                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-                {
-                    if (game->board[y][x].state == -1)
-                    {
-                        if (game->first_click == 1)
-                        {
-                            while(game->board[y][x].state == -1)
-                            {
-                                init_minesweeper(game);
-                                fill_zero(game, x, y);
-                            }
-                        }
-                        else
-                        {
-                            game->board[y][x].clicked = LMB;
-                            init_end(game);
-                            *game_state = Explosion;
-                        }
-                    }
-                    else
-                    {
-                        game->board[y][x].draw = NUMBER;
-                        game->board[y][x].inside = (Color){190, 190, 190, 255};
-                    }
-                    game->first_click = 0;
-                    
-                    if (game->board[y][x].state == 0) fill_zero(game, x, y);
-                    if (game->board[y][x].clicked == NOT_CLICKED || game->board[y][x].clicked == RMB) game->num_left--;
-                    game->board[y][x].clicked = LMB;
-                }
-
-                else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-                {
-                    if (game->board[y][x].clicked == LMB) continue;
-                    if (game->board[y][x].clicked == NOT_CLICKED)
-                    {
-                        game->board[y][x].draw = FLAG;
-                        game->board[y][x].clicked = RMB;
-                    }
-                    else if (game->board[y][x].clicked == RMB)
-                    {
-                        game->board[y][x].draw = EMPTY;
-                        game->board[y][x].clicked = NOT_CLICKED;
-                    }
-                }
+                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) handle_RMB(game, game_state, x, y);
+                if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) handle_LMB(game, game_state, x, y);
             }
         }
     }
