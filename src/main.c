@@ -9,7 +9,6 @@ int main(void) {
 
     Game_State game_state = Game;
     Minesweeper *game = malloc(sizeof(Minesweeper));
-    
     init_game(game);
 
     while (!WindowShouldClose()) {
@@ -56,11 +55,5 @@ int main(void) {
             break;
         }
     }
-
-    UnloadTexture(game->flag);
-    UnloadTexture(game->bomb);
-    UnloadTexture(game->play_again);
-    UnloadTexture(game->trophy);
-    free(game);
     return 0;
 }

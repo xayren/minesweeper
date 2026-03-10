@@ -4,6 +4,16 @@
 #include "minesweeper.h"
 
 
+void free_game(Minesweeper *game)
+{
+    UnloadTexture(game->flag);
+    UnloadTexture(game->bomb);
+    UnloadTexture(game->play_again);
+    UnloadTexture(game->trophy);
+    free(game);
+}
+
+
 void init_game(Minesweeper *minesweeper)
 {
     init_minesweeper(minesweeper);
