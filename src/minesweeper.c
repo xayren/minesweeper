@@ -4,6 +4,41 @@
 #include "minesweeper.h"
 
 
+void click_around(Minesweeper *game, Game_State *game_state, int x, int y)
+{
+    for (int y_i = -1; y_i < 2; y_i++)
+    {
+        for (int x_i = -1; x_i < 2; x_i++)
+        {
+            if (y_i == 0 && x_i == 0) continue;
+            if (x + x_i < 0 || x + x_i >= 10) continue;
+            if (y + y_i < 0 || y + y_i >= 10) continue;
+            if (game->board[y + y_i][x + x_i].clicked == NOT_CLICKED) handle_LMB(game, game_state, x + x_i, y + y_i);
+        }
+    }
+}
+
+
+int flags_around(Minesweeper *game, int x, int y)
+{
+    int result = 0;
+    for (int y_i = -1; y_i < 2; y_i++)
+    {
+        for (int x_i = -1; x_i < 2; x_i++)
+        {
+            if (y_i == 0 && x_i == 0) continue;
+            if (x + x_i < 0 || x + x_i >= 10) continue;
+            if (y + y_i < 0 || y + y_i >= 10) continue;
+            if (game->board[y + y_i][x + x_i].clicked == RMB) result++;
+        }
+    }
+    return result;
+}
+
+
+
+
+
 void is_victory(Minesweeper *game, Game_State *game_state)
 {
     if (game->num_left <= 0){
@@ -67,6 +102,7 @@ void mouse_liner(Minesweeper *game)
 void handle_LMB(Minesweeper *game, Game_State *game_state, int x, int y)
 {
     if (game->board[y][x].clicked == RMB) return;
+    if (game->board[y][x].clicked == LMB && game->board[y][x].state == flags_around(game, x, y)) click_around(game, game_state, x, y);
     if (game->board[y][x].state == -1)
     {
         if (game->first_click == 1)
@@ -92,7 +128,8 @@ void handle_LMB(Minesweeper *game, Game_State *game_state, int x, int y)
     game->first_click = 0;
     
     if (game->board[y][x].state == 0) fill_zero(game, x, y);
-    if (game->board[y][x].clicked == NOT_CLICKED || game->board[y][x].clicked == RMB) game->num_left--;
+    if (game->board[y][x].clicked == NOT_CLICKED) game->num_left--;
+    
     game->board[y][x].clicked = LMB;
 }
 
@@ -169,6 +206,12 @@ void init_end(Minesweeper *game)
             }
         }
     }
+}
+
+
+void trophy_draw(Minesweeper *game)
+{
+    DrawTexture(game->trophy, 372, 40, WHITE);
 }
 
 

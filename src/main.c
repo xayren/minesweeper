@@ -34,7 +34,7 @@ int main(void) {
 
         BeginDrawing();
             draw_board(game);
-            DrawTexture(game->trophy, 372, 40, WHITE);
+            trophy_draw(game);
             play_again_draw(game);
         EndDrawing();
             break;
