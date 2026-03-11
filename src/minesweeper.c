@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <time.h>
 #include "raylib.h"
 #include "minesweeper.h"
 
@@ -117,6 +116,7 @@ void handle_LMB(Minesweeper *game, Game_State *game_state, int x, int y)
         {
             game->board[y][x].clicked = LMB;
             init_end(game);
+            init_explosion(game->board[y][x].rec, &game->particles);
             *game_state = Explosion;
         }
     }

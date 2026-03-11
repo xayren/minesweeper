@@ -1,6 +1,7 @@
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
 #include "raylib.h"
+#include "explosion.h"
 
 typedef enum
 {
@@ -44,6 +45,7 @@ typedef struct
     int num_left;
     Texture2D trophy;
     int first_click;
+    Particles particles;
 } Minesweeper;
 
 int flags_around(Minesweeper *game, int x, int y);

@@ -23,7 +23,7 @@ FetchContent_MakeAvailable(raylib)
 
 include_directories(include)
 
-set(SOURCES src/main.c src/minesweeper.c)
+set(SOURCES src/main.c src/minesweeper.c src/explosion.c)
 add_executable(minesweeper ${SOURCES})
 
 if(WIN32)
