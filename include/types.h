@@ -3,8 +3,8 @@
 
 #include "raylib.h"
 
-#define MAX_PARTICLES 7
-#define NUM_OF_COLORS 20
+#define MAX_PARTICLES 10
+#define NUM_OF_COLORS 10
 #define CHANGE_COLOR (256 / NUM_OF_COLORS)
 
 typedef enum

@@ -305,7 +305,7 @@ void init_minesweeper(Minesweeper *minesweeper)
         template.rec.y = 250;
         template.rec.x += 30;
     }
-    int x, y, mines_left = 5;
+    int x, y, mines_left = 12;
     minesweeper->num_left = 100 - mines_left;
     //Placing mines
     while (mines_left > 0){
