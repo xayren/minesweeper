@@ -1,28 +1,17 @@
 #ifndef EXPLOSION_H
 #define EXPLOSION_H
 
+#include "types.h"
 #include "raylib.h"
-
-#define MAX_PARTICLES 500
-
-typedef struct
-{
-    Rectangle rec;
-    Vector2 vel;
-    float timer;
-} Particle;
-
-typedef struct
-{
-    Particle particle[MAX_PARTICLES];
-} Particles;
 
 Vector2 rand_x_y_circle(int r);
 
-void draw_explosion(Particles *particles);
+void draw_explosion_color(Particles *particles, Color color);
 
-void step_explosion(Particles *particles);
+void draw_explosion(Minesweeper *game);
 
-void init_explosion(Rectangle rec, Particles *particles);
+void step_explosion(Minesweeper *game);
+
+void init_explosion(Rectangle rec, Minesweeper *game);
 
 #endif

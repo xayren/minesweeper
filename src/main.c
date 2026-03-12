@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "raylib.h"
+#include "types.h"
 #include "minesweeper.h"
 #include "explosion.h"
 
@@ -45,12 +46,12 @@ int main(void) {
 
             mouse_liner(game);
             play_again(game, &game_state);
-            step_explosion(&game->particles);
+            step_explosion(game);
 
         BeginDrawing();
             draw_board(game);
             play_again_draw(game);
-            draw_explosion(&game->particles);
+            draw_explosion(game);
         EndDrawing();
             break;
         }
