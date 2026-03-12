@@ -24,7 +24,7 @@ FetchContent_MakeAvailable(raylib)
 include_directories(include)
 
 set(SOURCES src/main.c src/minesweeper.c src/explosion.c)
-add_executable(minesweeper ${SOURCES})
+add_executable(minesweeper WIN32 ${SOURCES})
 
 if(WIN32)
     target_link_libraries(minesweeper raylib winmm gdi32)
